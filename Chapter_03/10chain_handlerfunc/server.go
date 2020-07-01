@@ -1,4 +1,3 @@
-// リスト3.10
 package main
 
 import (
@@ -13,16 +12,16 @@ func hello(w http.ResponseWriter, r *http.Request) {
 }
 
 func log(h http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+	return func (w http.ResponseWriter, r *http.Request) {
 		name := runtime.FuncForPC(reflect.ValueOf(h).Pointer()).Name()
-		fmt.Println("ハンドラ関数が呼び出されました - " + name)
+		fmt.Println("Handler function called - " + name)
 		h(w, r)
 	}
 }
 
 func main() {
-	server := http.Server{
-		Addr: "127.0.0.1:8080",
+	server := http.Server {
+		Addr: "127.0.0.1:8008",
 	}
 	http.HandleFunc("/hello", log(hello))
 	server.ListenAndServe()

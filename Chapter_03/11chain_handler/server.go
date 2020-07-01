@@ -1,4 +1,3 @@
-// リスト3.11
 package main
 
 import (
@@ -8,27 +7,27 @@ import (
 
 type HelloHandler struct{}
 
-func (h HelloHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h HelloHandler) ServeHTTP (w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello!")
 }
 
 func log(h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Printf("ハンドラが呼び出されました - %T\n", h)
+	return http.HandlerFunc (func(w http.ResponseWriter, r *http.Request) {
+		fmt.Printf("Handler called - %T\n", h)
 		h.ServeHTTP(w, r)
 	})
 }
 
 func protect(h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// some code to make sure the user is authorized
+	return http.HandlerFunc (func(w http.ResponseWriter, r *http.Request) {
+		// ...
 		h.ServeHTTP(w, r)
 	})
 }
 
 func main() {
-	server := http.Server{
-		Addr: "127.0.0.1:8080",
+	server := http.Server {
+		Addr: "127.0.0.1:8008",
 	}
 	hello := HelloHandler{}
 	http.Handle("/hello", protect(log(hello)))
